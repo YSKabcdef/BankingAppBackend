@@ -1,4 +1,4 @@
-package net.java.portfolio.banking.exception;
+package net.java.portfolio.banking.dto;
 
 import java.time.LocalDateTime;
 

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import net.java.portfolio.banking.dto.AccountDto;
+import net.java.portfolio.banking.dto.TransferFundDto;
 import net.java.portfolio.banking.entity.Account;
 import net.java.portfolio.banking.entity.mapper.AccountMapper;
 import net.java.portfolio.banking.exception.AccountException;
@@ -64,5 +65,19 @@ public class AccountServiceImpl implements AccountService {
         List<Account> accounts = accountRepo.findAll();
         return accounts.stream().map((account)->AccountMapper.mapToAccountDto(account)).collect(Collectors.toList());
         
+    }
+
+    @Override
+    public void transferFunds(TransferFundDto transferFundDto) {
+        // retrieve the account from each sender  
+        Account fromAccount = accountRepo.findById(transferFundDto.fromAccountId()).orElseThrow(() -> new AccountException("Account does not exist"));
+        Account toAccount = accountRepo.findById(transferFundDto.toAccountId()).orElseThrow(() -> new AccountException("Account does not exist"));
+        if(fromAccount.getBalance()<transferFundDto.amount()){
+            throw new RuntimeException("Insufficient Amount");
+        }
+        fromAccount.setBalance(fromAccount.getBalance() - transferFundDto.amount());
+        accountRepo.save(fromAccount);
+        toAccount.setBalance(toAccount.getBalance() + transferFundDto.amount());
+        accountRepo.save(toAccount);
     }
 }
