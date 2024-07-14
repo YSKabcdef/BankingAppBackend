@@ -1,4 +1,4 @@
-package net.java.portfolio.banking.entity.mapper;
+package net.java.portfolio.banking.mapper;
 
 import net.java.portfolio.banking.dto.AccountDto;
 import net.java.portfolio.banking.entity.Account;

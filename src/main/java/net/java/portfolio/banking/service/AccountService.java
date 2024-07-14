@@ -3,6 +3,7 @@ package net.java.portfolio.banking.service;
 import java.util.List;
 
 import net.java.portfolio.banking.dto.AccountDto;
+import net.java.portfolio.banking.dto.TransactionDto;
 import net.java.portfolio.banking.dto.TransferFundDto;
 
 public interface AccountService {
@@ -19,4 +20,6 @@ public interface AccountService {
     void deleteAccount(Long id);
     
     void transferFunds(TransferFundDto transferFundDto);
+
+    List<TransactionDto>  getAccountTransactions(Long accountId);
 }   
